@@ -9,7 +9,10 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "semi": 0,
+        "semi": [
+            "error",
+            "never"
+        ],
         "import/no-extraneous-dependencies": 0
     }
 }

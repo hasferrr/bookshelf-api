@@ -64,4 +64,21 @@ const addNewBook = (bookProperties) => {
   return book
 }
 
-module.exports = { books, addNewBook }
+/**
+ * @param {BookProperties} bookProperties
+ * @param {number} index
+ * @returns void
+ */
+const updateBook = (bookProperties, index) => {
+  books[index] = {
+    ...books[index],
+    ...bookProperties,
+    updatedAt: new Date().toISOString(),
+  }
+}
+
+module.exports = {
+  books,
+  addNewBook,
+  updateBook,
+}

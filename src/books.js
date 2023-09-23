@@ -77,8 +77,17 @@ const updateBook = (bookProperties, index) => {
   }
 }
 
+/**
+ * @param {number} index
+ * @returns void
+ */
+const deleteBook = (index) => {
+  books.splice(index, 1)
+}
+
 module.exports = {
   books,
   addNewBook,
   updateBook,
+  deleteBook,
 }

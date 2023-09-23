@@ -1,4 +1,9 @@
-const { books, addNewBook, updateBook } = require('./books')
+const {
+  books,
+  addNewBook,
+  updateBook,
+  deleteBook,
+} = require('./books')
 
 const addBookHandler = (request, h) => {
   if (request.payload) {
@@ -110,9 +115,29 @@ const editBookByIdHandler = (request, h) => {
   }).code(400)
 }
 
+const deleteBookByIdHandler = (request, h) => {
+  const { id } = request.params
+  const index = books.findIndex((b) => b.id === id)
+
+  if (index === -1) {
+    return h.response({
+      status: 'fail',
+      message: 'Buku gagal dihapus. Id tidak ditemukan',
+    }).code(404)
+  }
+
+  deleteBook(index)
+
+  return ({
+    status: 'success',
+    message: 'Buku berhasil dihapus',
+  })
+}
+
 module.exports = {
   addBookHandler,
   getAllBooksHandler,
   getBookByIdHandler,
   editBookByIdHandler,
+  deleteBookByIdHandler,
 }

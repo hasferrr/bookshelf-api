@@ -46,7 +46,13 @@ const addBookHandler = (request, h) => {
 
 const getAllBooksHandler = () => ({
   status: 'success',
-  data: { books },
+  data: {
+    books: books.map((b) => ({
+      id: b.id,
+      name: b.name,
+      publisher: b.publisher,
+    })),
+  },
 })
 
 const getBookByIdHandler = (request, h) => {

@@ -6,42 +6,33 @@ const {
 } = require('./books')
 
 const addBookHandler = (request, h) => {
-  if (request.payload) {
-    const {
-      name, year, author, summary, publisher, pageCount, readPage, reading,
-    } = request.payload
+  const {
+    name, year, author, summary, publisher, pageCount, readPage, reading,
+  } = request.payload
 
-    if (!name) {
-      return h.response({
-        status: 'fail',
-        message: 'Gagal menambahkan buku. Mohon isi nama buku',
-      }).code(400)
-    }
-
-    if (readPage > pageCount) {
-      return h.response({
-        status: 'fail',
-        message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
-      }).code(400)
-    }
-
-    if (name && year && author && summary && publisher && pageCount && readPage && typeof reading === 'boolean') {
-      const added = addNewBook({
-        name, year, author, summary, publisher, pageCount, readPage, reading,
-      })
-
-      return h.response({
-        status: 'success',
-        message: 'Buku berhasil ditambahkan',
-        data: { bookId: added.id },
-      }).code(201)
-    }
+  if (!name) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    }).code(400)
   }
 
+  if (readPage > pageCount) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+    }).code(400)
+  }
+
+  const added = addNewBook({
+    name, year, author, summary, publisher, pageCount, readPage, reading,
+  })
+
   return h.response({
-    status: 'fail',
-    message: 'Gagal menambahkan buku. Masukkan semua property buku',
-  }).code(400)
+    status: 'success',
+    message: 'Buku berhasil ditambahkan',
+    data: { bookId: added.id },
+  }).code(201)
 }
 
 const getAllBooksHandler = (request) => {
@@ -101,41 +92,32 @@ const editBookByIdHandler = (request, h) => {
     }).code(404)
   }
 
-  if (request.payload) {
-    const {
-      name, year, author, summary, publisher, pageCount, readPage, reading,
-    } = request.payload
+  const {
+    name, year, author, summary, publisher, pageCount, readPage, reading,
+  } = request.payload
 
-    if (!name) {
-      return h.response({
-        status: 'fail',
-        message: 'Gagal memperbarui buku. Mohon isi nama buku',
-      }).code(400)
-    }
-
-    if (readPage > pageCount) {
-      return h.response({
-        status: 'fail',
-        message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
-      }).code(400)
-    }
-
-    if (name && year && author && summary && publisher && pageCount && readPage && typeof reading === 'boolean') {
-      updateBook({
-        name, year, author, summary, publisher, pageCount, readPage, reading,
-      }, index)
-
-      return h.response({
-        status: 'success',
-        message: 'Buku berhasil diperbarui',
-      }).code(200)
-    }
+  if (!name) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    }).code(400)
   }
 
+  if (readPage > pageCount) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+    }).code(400)
+  }
+
+  updateBook({
+    name, year, author, summary, publisher, pageCount, readPage, reading,
+  }, index)
+
   return h.response({
-    status: 'fail',
-    message: 'Gagal memperbarui buku. Masukkan semua property buku',
-  }).code(400)
+    status: 'success',
+    message: 'Buku berhasil diperbarui',
+  }).code(200)
 }
 
 const deleteBookByIdHandler = (request, h) => {

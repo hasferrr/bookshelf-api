@@ -1,6 +1,6 @@
 const { books, addNewBook } = require('./books')
 
-const addNoteHandler = (request, h) => {
+const addBookHandler = (request, h) => {
   if (request.payload) {
     const {
       name, year, author, summary, publisher, pageCount, readPage, reading,
@@ -39,12 +39,12 @@ const addNoteHandler = (request, h) => {
   }).code(400)
 }
 
-const getAllNotesHandler = () => ({
+const getAllBooksHandler = () => ({
   status: 'success',
   data: { books },
 })
 
-const getNoteByIdHandler = (request, h) => {
+const getBookByIdHandler = (request, h) => {
   const { id } = request.params
 
   const bookFound = books.find((b) => b.id === id)
@@ -63,7 +63,7 @@ const getNoteByIdHandler = (request, h) => {
 }
 
 module.exports = {
-  addNoteHandler,
-  getAllNotesHandler,
-  getNoteByIdHandler,
+  addBookHandler,
+  getAllBooksHandler,
+  getBookByIdHandler,
 }

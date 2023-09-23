@@ -44,7 +44,26 @@ const getAllNotesHandler = () => ({
   data: { books },
 })
 
+const getNoteByIdHandler = (request, h) => {
+  const { id } = request.params
+
+  const bookFound = books.find((b) => b.id === id)
+
+  if (bookFound) {
+    return {
+      status: 'success',
+      data: { book: bookFound },
+    }
+  }
+
+  return h.response({
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
+  }).code(404)
+}
+
 module.exports = {
   addNoteHandler,
   getAllNotesHandler,
+  getNoteByIdHandler,
 }

@@ -31,7 +31,22 @@ const { nanoid } = require('nanoid')
 /**
  * @type {Book[]}
  */
-const books = []
+const books = [
+  {
+    id: 'dummy',
+    name: 'SICP 2nd edition',
+    year: 1996,
+    author: 'Harold Abelson, Gerald Jay Sussman, Julie Sussman',
+    summary: 'Introduction to computer programming',
+    publisher: 'MIT Press',
+    pageCount: 657,
+    readPage: 100,
+    reading: true,
+    finished: false,
+    insertedAt: '2021-03-04T09:11:44.598Z',
+    updatedAt: '2021-03-04T09:11:44.598Z',
+  },
+]
 
 /**
  * @param {BookProperties} bookProperties
@@ -39,8 +54,8 @@ const books = []
  */
 const addNewBook = (bookProperties) => {
   const book = {
-    ...bookProperties,
     id: nanoid(16),
+    ...bookProperties,
     finished: bookProperties.pageCount === bookProperties.readPage,
     insertedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

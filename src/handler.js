@@ -44,16 +44,33 @@ const addBookHandler = (request, h) => {
   }).code(400)
 }
 
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books: books.map((b) => ({
-      id: b.id,
-      name: b.name,
-      publisher: b.publisher,
-    })),
-  },
-})
+const getAllBooksHandler = (request) => {
+  let returnedBooks = [...books]
+  const { name, reading, finished } = request.query
+
+  if (name) {
+    returnedBooks = returnedBooks.filter((b) => b.name.toLowerCase().includes(name.toLowerCase()))
+  }
+
+  if (reading) {
+    returnedBooks = returnedBooks.filter((b) => b.reading === Boolean(Number(reading)))
+  }
+
+  if (finished) {
+    returnedBooks = returnedBooks.filter((b) => b.finished === Boolean(Number(finished)))
+  }
+
+  return {
+    status: 'success',
+    data: {
+      books: returnedBooks.map((b) => ({
+        id: b.id,
+        name: b.name,
+        publisher: b.publisher,
+      })),
+    },
+  }
+}
 
 const getBookByIdHandler = (request, h) => {
   const { id } = request.params

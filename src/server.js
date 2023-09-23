@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi')
+const routes = require('./routes')
 
 const init = async () => {
   const server = Hapi.server({
@@ -6,11 +7,7 @@ const init = async () => {
     host: 'localhost',
   })
 
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: () => 'Homepage',
-  })
+  server.route(routes)
 
   await server.start()
   // eslint-disable-next-line no-console
